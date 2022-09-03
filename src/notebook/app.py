@@ -92,9 +92,6 @@ page = st.sidebar.number_input("page", min_value=1, max_value=max_page, key="sid
 evaluation = st.sidebar.selectbox(
     "evaluation mode", ["on", "off"], index=1)
 
-if evaluation == "off":
-    page = st.number_input("page", min_value=1, max_value=max_page, key="mainp")
-
 filtertt = st.sidebar.selectbox(
     "train / test", ["all", "train", "like", "not like", "test"], index=4)
 if filtertt == "train":
@@ -111,6 +108,12 @@ nw = st.sidebar.selectbox(
 nt = st.sidebar.selectbox(
     "show in 1 page", [1, 2, 5, 10], index=2, key="nt")
 nh = int(nt/nw)
+
+asce = st.sidebar.selectbox(
+    "sort", ["ascending", "descending"], index=0
+)
+if asce == "descending":
+    df = df.sort_values("01_like",ascending=True)
 
 st.header(f"{filtertt} images ({page}/{max_page} page)")
 
