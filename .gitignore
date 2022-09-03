@@ -1,3 +1,4 @@
+*.pth
 *-checkpoint.ipynb
 *.csv
 *.png
