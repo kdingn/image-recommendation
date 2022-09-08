@@ -59,6 +59,7 @@ def save_add_redundant(redundant, ids):
 
 # parameters
 input_dir = "./image"
+extension = "jpg"  # png
 
 # dataframes
 tran = pd.read_csv("label_tran.csv")  # only changed by on-change
@@ -145,5 +146,5 @@ for j in range(nh):
                     save_add_redundant(redundant, index)
                     st.success(f"add {index} as redundant")
                     st.button("refresh")
-            st.image(f"{input_dir}/{index}.png")
+            st.image(f"{input_dir}/{index}.{extension}")
 st.write("""---""")
