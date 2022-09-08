@@ -59,7 +59,7 @@ def save_add_redundant(redundant, ids):
 
 # parameters
 input_dir = "./image"
-extension = "jpg"  # png
+extension = config["extension"]
 
 # dataframes
 tran = pd.read_csv("label_tran.csv")  # only changed by on-change
