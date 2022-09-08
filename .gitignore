@@ -6,3 +6,4 @@
 src/notebook/99_edit.ipynb
 src/notebook/config.yaml
 src/notebook/00_scraping.ipynb
+**/*.jpg
