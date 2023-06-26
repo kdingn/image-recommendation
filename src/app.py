@@ -1,9 +1,10 @@
-import streamlit as st
-import pandas as pd
 import datetime
+
+import pandas as pd
+import streamlit as st
 import yaml
 
-with open('config.yaml', 'r') as f:
+with open("config.yaml", "r") as f:
     config = yaml.load(f, Loader=yaml.SafeLoader)
 
 
@@ -65,13 +66,13 @@ extension = config["extension"]
 tran = pd.read_csv("label_tran.csv")  # only changed by on-change
 redundant = pd.read_csv("redundant.csv")  # only changed by on-change
 
-actl = tran.copy().sort_values(
-    "update", ascending=False
-).drop_duplicates(
-    "id", keep="first"
-).drop(
-    "update", axis=1
-).reset_index(drop=True)
+actl = (
+    tran.copy()
+    .sort_values("update", ascending=False)
+    .drop_duplicates("id", keep="first")
+    .drop("update", axis=1)
+    .reset_index(drop=True)
+)
 actl = filter_redundant(actl, redundant)
 
 pred = pd.read_csv("prediction.csv").merge(actl, on="id", how="left")
@@ -81,20 +82,17 @@ pred = pred.sort_values("01_like", ascending=False)
 df = pred.copy()
 
 # plots
-st.set_page_config(
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
+st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
 
 nt = 10
-max_page = int(len(df)/nt)
+max_page = int(len(df) / nt)
 page = st.sidebar.number_input("page", min_value=1, max_value=max_page, key="sidep")
 
-evaluation = st.sidebar.selectbox(
-    "evaluation mode", ["on", "off"], index=1)
+evaluation = st.sidebar.selectbox("evaluation mode", ["on", "off"], index=1)
 
 filtertt = st.sidebar.selectbox(
-    "train / test", ["all", "train", "like", "not like", "test"], index=4)
+    "train / test", ["all", "train", "like", "not like", "test"], index=4
+)
 if filtertt == "train":
     df = df[~df["like"].isnull()]
 elif filtertt == "like":
@@ -104,17 +102,13 @@ elif filtertt == "not like":
 elif filtertt == "test":
     df = df[df["like"].isnull()]
 
-nw = st.sidebar.selectbox(
-    "columns", [1, 2, 5, 10], index=2, key="nw")
-nt = st.sidebar.selectbox(
-    "show in 1 page", [1, 2, 5, 10], index=2, key="nt")
-nh = int(nt/nw)
+nw = st.sidebar.selectbox("columns", [1, 2, 5, 10], index=2, key="nw")
+nt = st.sidebar.selectbox("show in 1 page", [1, 2, 5, 10], index=2, key="nt")
+nh = int(nt / nw)
 
-asce = st.sidebar.selectbox(
-    "sort", ["ascending", "descending"], index=0
-)
+asce = st.sidebar.selectbox("sort", ["ascending", "descending"], index=0)
 if asce == "descending":
-    df = df.sort_values("01_like",ascending=True)
+    df = df.sort_values("01_like", ascending=True)
 
 st.header(f"{filtertt} images ({page}/{max_page} page)")
 
@@ -122,10 +116,10 @@ for j in range(nh):
     st.write("""---""")
     cols = st.columns(nw)
     for i in range(nw):
-        ij = i + nw*j + nt*(page-1)
+        ij = i + nw * j + nt * (page - 1)
         with cols[i]:
-            index = df['id'].values[ij]
-            like = df['like'].values[ij]
+            index = df["id"].values[ij]
+            like = df["like"].values[ij]
             pred = df["01_like"].values[ij]
             link = config["link"].format(index)
 
