@@ -1,10 +1,6 @@
-*.pth
 *-checkpoint.*
+*.pth
 *.csv
 *.png
-./src/*
-src/99_edit.ipynb
+*.jpg
 src/config.yaml
-src/00_scraping.ipynb
-**/*.jpg
-src/00_scrayping.ipynb

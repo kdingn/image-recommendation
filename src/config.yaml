@@ -1,0 +1,10 @@
+link: "https://.../{}/"
+extension: "jpg" # png
+crop_rate:
+  wmin: 0.5
+  wmax: 1
+  hmin: 0
+  hmax: 1
+batch_size: 8
+epoch_num: 4
+model: "efficientnet" # vit
